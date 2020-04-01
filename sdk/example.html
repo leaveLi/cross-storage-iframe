@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>example</title>
+    <style>
+        button {
+            display: block;
+            margin: 0.5em 0;
+            font-size: 1em;
+            cursor: pointer;
+            padding: 0.5em;
+        }
+
+        button:hover {
+            background: #ddd;
+        }
+    </style>
+</head>
+
+
+<body>
+    <button id='example-set'>调用set方法</button>
+    <button id='example-get'>调用get方法</button>
+    <script src="./bin/example/example.js" type="text/javascript"></script>
+    <script>
+        (function (w, d) {
+            d.addEventListener('DOMContentLoaded', () => {
+                example.sdk.init().then(() => {
+                    d.querySelector('#example-set').addEventListener('click', async () => {
+                        var value = JSON.stringify({ 'key': 'hello, cross storage' });
+                        example.sdk.set('exampleKey', value).then(() => {
+                            w.alert('set success:' + value);
+                        });
+                    });
+
+                    d.querySelector('#example-get').addEventListener('click', () => {
+                        example.sdk.get('exampleKey').then((res) => { w.alert(res) });
+                    });
+
+                }).catch(e => w.alert(e));
+            });
+        }(window, document));
+    </script>
+
+</body>
+
+</html>
